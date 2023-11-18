@@ -23,15 +23,16 @@ public class Server extends Thread{
 		Socket player;
 		try(ServerSocket server = new ServerSocket(port);){
 			
-//			System.out.println("Servidor iniciado");
 			interfaceServer.addMessage("Servidor iniciado");
 			
 			while(true) {
 				interfaceServer.addMessage("Esperando jugadores");
 				player = server.accept();
 				DataOutputStream output = new DataOutputStream(player.getOutputStream());
+				
 				output.writeUTF("Esperando jugadores");
 				players.add(player);
+				output.writeUTF(players.size()+"");
 				interfaceServer.addMessage("Jugador "+ players.size() +" conectado con ip: "+player.getInetAddress());
 				if(players.size()==3) {
 					break; 
@@ -39,7 +40,6 @@ public class Server extends Thread{
 			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -51,7 +51,6 @@ public class Server extends Thread{
 				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
 				output.writeUTF("Se te ha asignado la carta");
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			
@@ -63,9 +62,4 @@ public class Server extends Thread{
 		Server s = new Server();
 		s.start();
 	}*/
-	
-	
-	
-	
-
 }

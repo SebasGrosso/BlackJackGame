@@ -19,18 +19,16 @@ public class Player extends Thread{
 	@Override
 	public void run() {
 		try {
-			Socket player = new Socket("localhost", port);
+			Socket player = new Socket("192.168.1.30", port);
 			DataInputStream input = new DataInputStream(player.getInputStream());
-			
-			
+			while (true) {
+				waitingPlayersFrame.setPlayersCount(input.readUTF());
+			}
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	/*public static void main(String[] args) {
 		Player c = new Player();
