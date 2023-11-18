@@ -30,9 +30,12 @@ public class Server extends Thread{
 				player = server.accept();
 				DataOutputStream output = new DataOutputStream(player.getOutputStream());
 				
-				output.writeUTF("Esperando jugadores");
 				players.add(player);
-				output.writeUTF(players.size()+"");
+				for (Socket socket : players) {
+					DataOutputStream output1 = new DataOutputStream(socket.getOutputStream());
+					output1.writeUTF(players.size()+"");
+				}
+				
 				interfaceServer.addMessage("Jugador "+ players.size() +" conectado con ip: "+player.getInetAddress());
 				if(players.size()==3) {
 					break; 
