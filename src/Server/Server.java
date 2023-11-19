@@ -2,20 +2,29 @@ package Server;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 public class Server extends Thread{
 	
 	private final int port = 8081;
 	private ArrayList<Socket> players;
 	private InterfaceServer interfaceServer;
+	private Deck deck;
+	private ArrayList<Card> deckGame;
+	private int count;
 	
 	
 	public Server(InterfaceServer interfaceServer) {
 		this.players = new ArrayList<Socket>();
 		this.interfaceServer = interfaceServer;
+		deck = new Deck();
+		deckGame = deck.getDeck();
+		count = 52;
 	}
 	
 	@Override
@@ -40,7 +49,9 @@ public class Server extends Thread{
 				if(players.size()==3) {
 					break; 
 				}
+				
 			}
+			TalkWithPlayers();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -48,17 +59,25 @@ public class Server extends Thread{
 		
 	}
 	
-	public void TalkWithClients() {
-		for (Socket socket : players) {
+	public void TalkWithPlayers() {
+		for (int i = 0; i < players.size(); i++) {
+			ObjectOutputStream output;
 			try {
-				DataOutputStream output = new DataOutputStream(socket.getOutputStream());
-				output.writeUTF("Se te ha asignado la carta");
+				output = new ObjectOutputStream(players.get(i).getOutputStream());
+				output.writeObject(deckGame.get(ramdomNumber()));
+				output.writeObject(deckGame.get(ramdomNumber()));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			
 		}
-		 
+	}
+	
+	public int ramdomNumber() {
+		Random random = new Random();
+		int number = random.nextInt(count);
+		deckGame.remove(number);
+		count--;
+        return number;
 	}
 	
 	/*public static void main(String[] args) {

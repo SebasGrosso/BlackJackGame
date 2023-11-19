@@ -12,6 +12,7 @@ public class WaitingPlayers extends JFrame {
 	private JLabel playersLabel;
     private JLabel waitingMessage;
     private JPanel waitingPlayerPanel;
+    private JLabel game;
 
     public WaitingPlayers() {
        
@@ -39,13 +40,20 @@ public class WaitingPlayers extends JFrame {
     public void setPlayersCount(String count) {
         playersLabel.setText("Jugadores Conectados: " + count);
         if (count.equals("3")) {
-			waitingPlayerPanel.removeAll();
-			JButton yap = new JButton("Panel de juego");
-			waitingPlayerPanel.add(yap, BorderLayout.CENTER);
-			waitingPlayerPanel.revalidate();
-			waitingPlayerPanel.repaint();
+        	prueba();
 		}
     }
+    
+    public void prueba() {
+    	waitingPlayerPanel.removeAll();
+		game = new JLabel("Panel de juego");
+		waitingPlayerPanel.add(game, BorderLayout.CENTER);
+		waitingPlayerPanel.revalidate();
+		waitingPlayerPanel.repaint();
+    }
+    
+    
+    
 
     public static void main(String[] args) {
         WaitingPlayers waitingPlayersFrame = new WaitingPlayers();
