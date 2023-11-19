@@ -46,6 +46,7 @@ public class Server extends Thread{
 				}
 				
 				interfaceServer.addMessage("Jugador "+ players.size() +" conectado con ip: "+player.getInetAddress());
+				interfaceServer.setPlayersCount(players.size()+"");
 				if(players.size()==3) {
 					break; 
 				}
@@ -79,9 +80,4 @@ public class Server extends Thread{
 		count--;
         return number;
 	}
-	
-	/*public static void main(String[] args) {
-		Server s = new Server();
-		s.start();
-	}*/
 }

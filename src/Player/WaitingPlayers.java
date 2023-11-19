@@ -9,8 +9,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+
+import Server.Card;
 
 public class WaitingPlayers extends JFrame {
 
@@ -20,6 +23,7 @@ public class WaitingPlayers extends JFrame {
     private JPanel waitingPlayerPanel;
     private JButton hit;
     private JButton stant;
+    private JTextArea panelData;
 
     public WaitingPlayers() {
         setTitle("BlackJack");
@@ -31,6 +35,7 @@ public class WaitingPlayers extends JFrame {
         add(waitingPlayerPanel);
         initComponents();
         setVisible(true);
+        panelData = new JTextArea();
     }
     
     public void initComponents() {
@@ -61,8 +66,9 @@ public class WaitingPlayers extends JFrame {
         panelButtons.add(hit);
         panelButtons.add(stant);
         
-        JPanel panelData = new JPanel();
+        
         panelData.setBackground(Color.WHITE);
+        panelData.setEditable(false);
         
         waitingPlayerPanel.removeAll();
         waitingPlayerPanel.setLayout(new BorderLayout());
@@ -71,6 +77,11 @@ public class WaitingPlayers extends JFrame {
         waitingPlayerPanel.revalidate();
         waitingPlayerPanel.repaint();
     }
+    
+    public void addCard(Card cardd) {
+    	Card card = cardd;
+		panelData.append("Carta :"+card.getNameCard() + "\n");
+	}
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
