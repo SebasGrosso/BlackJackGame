@@ -1,6 +1,8 @@
 package Server;
 
-public class Card {
+import java.io.Serializable;
+
+public class Card implements Serializable{
 	
 	private String nameCard;
 	private int valueCard;
@@ -25,7 +27,4 @@ public class Card {
 	public void setValueCard(int valueCard) {
 		this.valueCard = valueCard;
 	}
-	
-	
-
 }
