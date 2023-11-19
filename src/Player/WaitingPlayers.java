@@ -1,65 +1,82 @@
 package Player;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
 public class WaitingPlayers extends JFrame {
-	
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JLabel playersLabel;
+
+    private static final long serialVersionUID = 1L;
+    private JLabel playersLabel;
     private JLabel waitingMessage;
     private JPanel waitingPlayerPanel;
-    private JLabel game;
+    private JButton hit;
+    private JButton stant;
 
     public WaitingPlayers() {
-       
         setTitle("BlackJack");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(300, 200);
-        setLocationRelativeTo(null); 
+        setSize(300, 300);
+        setLocationRelativeTo(null);
         setLayout(new BorderLayout());
-        
         waitingPlayerPanel = new JPanel();
-
-        playersLabel = new JLabel("Jugadores Conectados: 0", SwingConstants.CENTER);
+        add(waitingPlayerPanel);
+        initComponents();
+        setVisible(true);
+    }
+    
+    public void initComponents() {
+    	playersLabel = new JLabel("Jugadores Conectados: 0", SwingConstants.CENTER);
         playersLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         waitingPlayerPanel.add(playersLabel, BorderLayout.NORTH);
 
         waitingMessage = new JLabel("Esperando jugadores", SwingConstants.CENTER);
         waitingMessage.setFont(new Font("Arial", Font.BOLD, 18));
         waitingPlayerPanel.add(waitingMessage, BorderLayout.CENTER);
-
-        this.add(waitingPlayerPanel, BorderLayout.CENTER);
-        
-        setVisible(true);
     }
 
     public void setPlayersCount(String count) {
-        playersLabel.setText("Jugadores Conectados: " + count);
-        if (count.equals("3")) {
-        	prueba();
-		}
+        SwingUtilities.invokeLater(() -> {
+            playersLabel.setText("Jugadores Conectados: " + count);
+            if (count.equals("3")) {
+                initComponentsGame();
+            }
+        });
     }
-    
-    public void prueba() {
-    	waitingPlayerPanel.removeAll();
-		game = new JLabel("Panel de juego");
-		waitingPlayerPanel.add(game, BorderLayout.CENTER);
-		waitingPlayerPanel.revalidate();
-		waitingPlayerPanel.repaint();
+
+    public void initComponentsGame() {
+        JPanel panelButtons = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        
+        hit = new JButton("Pedir");
+        stant = new JButton("Plantarse"); 
+        
+        panelButtons.add(hit);
+        panelButtons.add(stant);
+        
+        JPanel panelData = new JPanel();
+        panelData.setBackground(Color.WHITE);
+        
+        waitingPlayerPanel.removeAll();
+        waitingPlayerPanel.setLayout(new BorderLayout());
+        waitingPlayerPanel.add(panelData, BorderLayout.CENTER);
+        waitingPlayerPanel.add(panelButtons, BorderLayout.SOUTH);
+        waitingPlayerPanel.revalidate();
+        waitingPlayerPanel.repaint();
     }
-    
-    
-    
 
     public static void main(String[] args) {
-        WaitingPlayers waitingPlayersFrame = new WaitingPlayers();
-        Player player = new Player(waitingPlayersFrame);
-        player.start();
+        SwingUtilities.invokeLater(() -> {
+            WaitingPlayers waitingPlayersFrame = new WaitingPlayers();
+            Player player = new Player(waitingPlayersFrame);
+            player.start();
+        });
     }
-    
 }
-
