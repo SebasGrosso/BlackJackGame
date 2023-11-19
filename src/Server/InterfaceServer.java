@@ -12,14 +12,13 @@ public class InterfaceServer extends JFrame {
 	private JButton startButton;
 	private JLabel playersLabel;
 	private JTextArea messageArea;
-	private int numberPlayers;
 
 	public InterfaceServer() {
 		setTitle("Blackjack Game");
-		setSize(700, 300); 
+		setSize(700, 300);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setLayout(null); 
+		setLayout(null);
 		initComponents();
 
 		add(startButton);
@@ -33,11 +32,16 @@ public class InterfaceServer extends JFrame {
 		});
 	}
 
+	public void setPlayersCount(String count) {
+		playersLabel.setText("Jugadores Conectados: " + count);
+
+	}
+
 	private void initComponents() {
 		startButton = new JButton("Iniciar Juego");
 		startButton.setBounds(50, 30, 200, 50);
 
-		playersLabel = new JLabel("Número de Jugadores: " + numberPlayers);
+		playersLabel = new JLabel("Número de Jugadores: 0");
 		playersLabel.setBounds(50, 90, 200, 30);
 
 		messageArea = new JTextArea();
@@ -51,8 +55,8 @@ public class InterfaceServer extends JFrame {
 
 	public static void main(String[] args) {
 		InterfaceServer interfaceServer = new InterfaceServer();
-		Server s = new Server(interfaceServer);
+		Server server = new Server(interfaceServer);
 		interfaceServer.setVisible(true);
-		s.start();
+		server.start();
 	}
 }

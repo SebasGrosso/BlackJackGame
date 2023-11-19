@@ -1,13 +1,19 @@
 package Server;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Deck {
+public class Deck implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Card> deck;
 	
 	public Deck () {
 		deck = new ArrayList<Card>();
+		addCards();
 	}
 	
 	public void addCards() {
@@ -75,7 +81,4 @@ public class Deck {
 	public void setDeck(ArrayList<Card> deck) {
 		this.deck = deck;
 	}
-	
-	
-
 }
