@@ -29,7 +29,7 @@ public class Deck implements Serializable{
 		deck.add(new Card("10-Corazón",10));
 		deck.add(new Card("J-Corazón",10));
 		deck.add(new Card("Q-Corazón",10));
-		deck.add(new Card("K-Corazón",11));
+		deck.add(new Card("K-Corazón",10));
 		
 		deck.add(new Card("As-Pica",11));
 		deck.add(new Card("2-Pica",2));
@@ -43,7 +43,7 @@ public class Deck implements Serializable{
 		deck.add(new Card("10-Pica",10));
 		deck.add(new Card("J-Pica",10));
 		deck.add(new Card("Q-Pica",10));
-		deck.add(new Card("K-Pica",11));
+		deck.add(new Card("K-Pica",10));
 		
 		deck.add(new Card("As-Diamante",11));
 		deck.add(new Card("2-Diamante",2));
@@ -71,7 +71,7 @@ public class Deck implements Serializable{
 		deck.add(new Card("10-Trebol",10));
 		deck.add(new Card("J-Trebol",10));
 		deck.add(new Card("Q-Trebol",10));
-		deck.add(new Card("K-Trebol",11));
+		deck.add(new Card("K-Trebol",10));
 	}
 
 	public ArrayList<Card> getDeck() {
