@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -24,8 +27,12 @@ public class WaitingPlayers extends JFrame {
     private JButton hit;
     private JButton stant;
     private JTextArea panelData;
-
+    private ArrayList<Card> deck;
+    private int score;
+    private Player player;
+	
     public WaitingPlayers() {
+    	deck = new ArrayList<Card>();
         setTitle("BlackJack");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(300, 300);
@@ -38,7 +45,13 @@ public class WaitingPlayers extends JFrame {
         panelData = new JTextArea();
     }
     
-    public void initComponents() {
+    public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+
+
+	public void initComponents() {
     	playersLabel = new JLabel("Jugadores Conectados: 0", SwingConstants.CENTER);
         playersLabel.setFont(new Font("Arial", Font.PLAIN, 14));
         waitingPlayerPanel.add(playersLabel, BorderLayout.NORTH);
@@ -70,6 +83,25 @@ public class WaitingPlayers extends JFrame {
         panelData.setBackground(Color.WHITE);
         panelData.setEditable(false);
         
+        hit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				player.requestCards();
+			}
+		});
+        
+        stant.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (Card card : deck) {
+					score = score + card.getValueCard();
+				}
+				panelData.append("Tu puntaje fue: " +score+ " \n");
+				stant.setEnabled(false);
+				hit.setEnabled(false);
+			}
+		});
+        
         waitingPlayerPanel.removeAll();
         waitingPlayerPanel.setLayout(new BorderLayout());
         waitingPlayerPanel.add(panelData, BorderLayout.CENTER);
@@ -80,12 +112,13 @@ public class WaitingPlayers extends JFrame {
     
     public void addCard(Card cardd) {
     	Card card = cardd;
+    	deck.add(card);
 		panelData.append("Carta :"+card.getNameCard() + "\n");
 	}
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            WaitingPlayers waitingPlayersFrame = new WaitingPlayers();
+        	WaitingPlayers waitingPlayersFrame = new WaitingPlayers();
             Player player = new Player(waitingPlayersFrame);
             player.start();
         });

@@ -6,7 +6,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Random;
 
 public class Server extends Thread{
@@ -17,6 +16,9 @@ public class Server extends Thread{
 	private Deck deck;
 	private ArrayList<Card> deckGame;
 	private int count;
+	private PlayerHandler playerHanler1;
+	private PlayerHandler playerHanler2;
+	private PlayerHandler playerHanler3;
 	
 	
 	public Server(InterfaceServer interfaceServer) {
@@ -24,7 +26,7 @@ public class Server extends Thread{
 		this.interfaceServer = interfaceServer;
 		deck = new Deck();
 		deckGame = deck.getDeck();
-		count = 52;
+		count = 51;
 	}
 	
 	@Override
@@ -37,7 +39,6 @@ public class Server extends Thread{
 			while(true) {
 				interfaceServer.addMessage("Esperando jugadores");
 				player = server.accept();
-				DataOutputStream output = new DataOutputStream(player.getOutputStream());
 				
 				players.add(player);
 				for (Socket socket : players) {
@@ -70,6 +71,23 @@ public class Server extends Thread{
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		playerHanler1 = new PlayerHandler(0, players.get(0), this);
+		playerHanler2 = new PlayerHandler(1, players.get(1), this);
+		playerHanler3 = new PlayerHandler(2, players.get(2), this);
+		playerHanler1.start();
+		playerHanler2.start();
+		playerHanler3.start();
+	}
+	
+	public void sendNewCard(Socket player) {
+		ObjectOutputStream output;
+		try {
+			output = new ObjectOutputStream(player.getOutputStream());
+			output.writeObject(deckGame.get(ramdomNumber()));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
