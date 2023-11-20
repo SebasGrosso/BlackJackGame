@@ -1,0 +1,3 @@
+El jugador: gfdsgfd sacó un puntaje de : 7
+El jugador: asdffwer sacó un puntaje de : 28
+El jugador: fasdf sacó un puntaje de : 22

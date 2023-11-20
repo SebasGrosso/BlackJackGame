@@ -16,7 +16,7 @@ public class PlayerHandler extends Thread {
 		this.server = server;
 	}
 
-	@Override
+	@Override 
 	public void run() {
 		try {
 			DataInputStream inputStream = new DataInputStream(player.getInputStream());
@@ -26,6 +26,8 @@ public class PlayerHandler extends Thread {
 
 				if (request.equals("true")) {
 					server.sendNewCard(player);
+				}else if(request.equals("endGame")) {
+					server.reciveResult(player);
 				}
 			}
 		} catch (IOException e) {
